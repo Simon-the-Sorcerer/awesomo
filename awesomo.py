@@ -23,5 +23,6 @@ async def on_message(message):
 
     if message.content.startswith('$meddl'):
         await message.channel.send('Meddl Loide!')
+        await message.delete()
 
 client.run(config.token)

@@ -125,3 +125,6 @@ dmypy.json
 
 # Eigener Stuff
 config.py
+
+# vscode
+.vscode
