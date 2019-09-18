@@ -1,6 +1,9 @@
-import discord
-import config
 import logging
+import config
+import discord
+from discord.ext import commands
+
+bot = commands.Bot(command_prefix='$')
 
 # Logging Einstellungen
 logger = logging.getLogger('discord')
@@ -10,19 +13,13 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 
-client = discord.Client()
-
-@client.event
+@bot.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    print('We have logged in as {}'.format(bot.user.name))
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@bot.command()
+async def meddl(ctx):
+    await ctx.send('Meddl Loide')
+    await bot.delete_message(ctx.message)
 
-    if message.content.startswith('$meddl'):
-        await message.channel.send('Meddl Loide!')
-        await message.delete()
-
-client.run(config.token)
+bot.run(config.token)
