@@ -3,6 +3,8 @@ import config
 import discord
 from discord.ext import commands
 
+import date_management as dm
+
 bot = commands.Bot(command_prefix='$')
 
 # Logging Einstellungen
@@ -42,6 +44,14 @@ async def info(ctx):
 
     await ctx.send(embed=embed)
     await ctx.message.delete()
+
+# Zockkalender
+@bot.command()
+async def dates(ctx, command='', date='', description=''):
+    if command == '':
+        await dm.show(ctx)
+    elif command == 'add':
+        await dm.add(ctx, date, description)
 
 bot.remove_command('help')
 @bot.command()
