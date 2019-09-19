@@ -20,6 +20,42 @@ async def on_ready():
 @bot.command()
 async def meddl(ctx):
     await ctx.send('Meddl Loide')
-    await bot.delete_message(ctx.message)
+    await ctx.message.delete()
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send('Greetings, I am the A.W.E.S.O.M.-O 4000')
+    await ctx.send('You could tell A.W.E.S.O.M.-O all of your most personal\
+                   secrets.')
+    await ctx.message.delete()
+
+@bot.command()
+async def info(ctx):
+    embed = discord.Embed(title='A.W.E.S.O.M.-O 4000', description='Greetings,\
+                          I am the A.W.E.S.O.M.-O 4000', color=0xab4642)
+
+    # give info about you here
+    embed.add_field(name="Author", value="<YOUR-USERNAME>")
+
+    # Shows the number of servers the bot is member of.
+    embed.add_field(name="Server count", value=f"{len(bot.guilds)}")
+
+    await ctx.send(embed=embed)
+    await ctx.message.delete()
+
+bot.remove_command('help')
+@bot.command()
+async def help(ctx):
+    embed = discord.Embed(title='A.W.E.S.O.M.-O 4000', description='Verfügbare\
+                          Befehle:', color=0xab4642)
+
+    embed.add_field(name='$meddl', value='Grußform, häufig angewendet in\
+                    Mittelfranken', inline=False)
+    embed.add_field(name='$hello', value='A.W.E.S.O.M-O stellt sich vor',
+                    inline=False)
+    embed.add_field(name='$help', value='Gibt diese Hilfe aus', inline=False)
+
+    await ctx.send(embed=embed)
+    await ctx.message.delete()
 
 bot.run(config.token)
