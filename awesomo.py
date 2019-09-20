@@ -1,7 +1,11 @@
+'''
+Discord Bot für den NERDSquad-Discord-Server
+'''
+
 import logging
-import config
-import discord
 from discord.ext import commands
+import discord
+import config
 
 import date_management as dm
 
@@ -17,15 +21,24 @@ logger.addHandler(handler)
 
 @bot.event
 async def on_ready():
-    print('We have logged in as {}'.format(bot.user.name))
+    '''
+    Kurze Meldung, wenn der Login auf dem Server erfolgreich war
+    '''
+    print('We have logged in as {} '.format(bot.user.name))
 
 @bot.command()
 async def meddl(ctx):
+    '''
+    Mittelfränkische Begrüßung
+    '''
     await ctx.send('Meddl Loide')
     await ctx.message.delete()
 
 @bot.command()
 async def hello(ctx):
+    '''
+    Der Bot stellt sich vor
+    '''
     await ctx.send('Greetings, I am the A.W.E.S.O.M.-O 4000')
     await ctx.send('You could tell A.W.E.S.O.M.-O all of your most personal\
                    secrets.')
@@ -33,13 +46,16 @@ async def hello(ctx):
 
 @bot.command()
 async def info(ctx):
+    '''
+    Informationen über verbundene Server und den Autor
+    '''
     embed = discord.Embed(title='A.W.E.S.O.M.-O 4000', description='Greetings,\
                           I am the A.W.E.S.O.M.-O 4000', color=0xab4642)
 
-    # give info about you here
-    embed.add_field(name="Author", value="<YOUR-USERNAME>")
+    # Informationen über den Autor
+    embed.add_field(name="Author", value="MadPsymon")
 
-    # Shows the number of servers the bot is member of.
+    # Informationen über Anzahl der verbundenen Server
     embed.add_field(name="Server count", value=f"{len(bot.guilds)}")
 
     await ctx.send(embed=embed)
@@ -48,14 +64,21 @@ async def info(ctx):
 # Zockkalender
 @bot.command()
 async def dates(ctx, command='', date='', description=''):
+    '''
+    Kommando zum Verwalten vom Zockkalender ACHTUNG: WIP!
+    '''
     if command == '':
         await dm.show(ctx)
     elif command == 'add':
         await dm.add(ctx, date, description)
 
+# Eingebautes Hilfe-Kommando deaktivieren
 bot.remove_command('help')
 @bot.command()
 async def help(ctx):
+    '''
+    Informationen über verfügbare Befehle
+    '''
     embed = discord.Embed(title='A.W.E.S.O.M.-O 4000', description='Verfügbare\
                           Befehle:', color=0xab4642)
 
