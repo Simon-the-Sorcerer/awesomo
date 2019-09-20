@@ -125,6 +125,7 @@ dmypy.json
 
 # Eigener Stuff
 config.py
+calendar.db
 
 # vscode
 .vscode

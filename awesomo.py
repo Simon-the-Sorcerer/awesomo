@@ -3,6 +3,9 @@ Discord Bot für den NERDSquad-Discord-Server
 '''
 
 import logging
+import sqlite3
+import sys
+import os
 from discord.ext import commands
 import discord
 import config
@@ -10,6 +13,23 @@ import config
 import date_management as dm
 
 bot = commands.Bot(command_prefix='$')
+
+# Datenbank für Zockkalender erstellen, falls sie nicht schon existiert
+if not os.path.exists('calendar.db'):
+    print('Neue Kalenderdatenbank wird erstellt')
+    connection = sqlite3.connect('calendar.db')
+    cursor = connection.cursor()
+    sql = 'CREATE TABLE dates(\
+            id INTEGER PRIMARY KEY,\
+            Date DATE,\
+            Description TEXT)'
+    cursor.execute(sql)
+    connection.commit()
+    connection.close()
+    print('Neue Kalenderdatenbank angelegt')
+else:
+    print('Vorhandene Kalenderdatenbank gefunden')
+
 
 # Logging Einstellungen
 logger = logging.getLogger('discord')
