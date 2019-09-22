@@ -14,7 +14,7 @@ async def show(ctx):
     sql = 'SELECT Date, Description FROM dates'
     cursor.execute(sql)
     rows = cursor.fetchall()
-    
+
     embed = discord.Embed(title='Anstehende Zocktermine', description='', color=0xab4642)
     dates = ''
     descriptions = ''
@@ -23,6 +23,8 @@ async def show(ctx):
         descriptions += row[1] + '\n'
     embed.add_field(name='Termin', value=dates, inline=True)
     embed.add_field(name='Beschreibung', value=descriptions, inline=True)
+    connection.commit()
+    connection.close()
 
     await ctx.send(embed=embed)
     await ctx.message.delete()
@@ -34,6 +36,14 @@ async def add(ctx, date, description):
     if date == '' or description == '':
         await ctx.send('Datum und/oder Beschreibung leer')
     else:
-        await ctx.send('dates: add Datum: {}, Beschreibung: {}'.format(date,
-                                                                       description))
+        connection = sqlite3.connect('calendar.db')
+        cursor = connection.cursor()
+
+        sql = 'INSERT INTO dates (Date, Description) VALUES ("{}", "{}")'.format(date, description)
+        cursor.execute(sql)
+
+        connection.commit()
+        connection.close()
+
+        await ctx.send('Termin {} am {} gespeichert'.format(description, date))
         await ctx.message.delete()

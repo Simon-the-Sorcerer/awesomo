@@ -87,7 +87,7 @@ async def dates(ctx, command='', date='', description=''):
     '''
     Kommando zum Verwalten vom Zockkalender ACHTUNG: WIP!
     '''
-    if command == '':
+    if command == '' or command == 'show':
         await dm.show(ctx)
     elif command == 'add':
         await dm.add(ctx, date, description)
