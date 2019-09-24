@@ -29,21 +29,27 @@ async def show(ctx):
     await ctx.send(embed=embed)
     await ctx.message.delete()
 
-async def add(ctx, date, description):
+async def add(ctx, date, time, args):
     '''
     Termin hinzufügen
     '''
-    if date == '' or description == '':
+    if date == '' or not args:
         await ctx.send('Datum und/oder Beschreibung leer')
     else:
         connection = sqlite3.connect('calendar.db')
         cursor = connection.cursor()
 
-        sql = 'INSERT INTO dates (Date, Description) VALUES ("{}", "{}")'.format(date, description)
+        description = ''
+        for arg in args:
+            description += '{} '.format(arg)
+
+        sql = 'INSERT INTO dates (Date, Description) VALUES ("{} {}",\
+        "{}")'.format(date, time, description)
         cursor.execute(sql)
 
         connection.commit()
         connection.close()
 
-        await ctx.send('Termin {} am {} gespeichert'.format(description, date))
+        await ctx.send('Termin "{}" am {} um {} gespeichert'.format(description,
+                                                                  date, time))
         await ctx.message.delete()

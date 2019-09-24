@@ -83,14 +83,14 @@ async def info(ctx):
 
 # Zockkalender
 @bot.command()
-async def dates(ctx, command='', date='', description=''):
+async def dates(ctx, command='', date='', time='', *args):
     '''
     Kommando zum Verwalten vom Zockkalender ACHTUNG: WIP!
     '''
     if command == '' or command == 'show':
         await dm.show(ctx)
     elif command == 'add':
-        await dm.add(ctx, date, description)
+        await dm.add(ctx, date, time, args)
 
 # Eingebautes Hilfe-Kommando deaktivieren
 bot.remove_command('help')
