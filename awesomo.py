@@ -106,6 +106,11 @@ async def help(ctx):
                     Mittelfranken', inline=False)
     embed.add_field(name='$hello', value='A.W.E.S.O.M-O stellt sich vor',
                     inline=False)
+    embed.add_field(name='$dates show', value='Gibt Termine im Zockkalender aus', inline=False),
+    embed.add_field(name='$dates add DATUM UHRZEIT BESCHREIBUNG', value='Trägt\
+                    Termin in Zockkalender ein\n\
+                    BEISPIEL: $dates add 2020-02-20 20:20 Rudi aus Buddeln\
+                    grüßen', inline=False),
     embed.add_field(name='$help', value='Gibt diese Hilfe aus', inline=False)
 
     await ctx.send(embed=embed)
