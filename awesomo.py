@@ -95,6 +95,7 @@ async def dates(ctx, command='', date='', time='', *args):
 
 @tasks.loop(hours=24)
 async def date_reminder():
+    logger.info('Reminder ausgeführt')
     channel = bot.get_channel(config.remind_channel)
     await dm.remind(channel)
 
