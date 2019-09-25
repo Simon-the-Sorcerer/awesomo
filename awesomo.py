@@ -6,7 +6,7 @@ import logging
 import sqlite3
 import sys
 import os
-from discord.ext import commands
+from discord.ext import commands, tasks
 import discord
 import config
 
@@ -91,6 +91,11 @@ async def dates(ctx, command='', date='', time='', *args):
         await dm.show(ctx)
     elif command == 'add':
         await dm.add(ctx, date, time, args)
+
+@tasks.loop(minutes=5.0)
+async def date_reminder():
+    channel = bot.get_channel(config.remind_channel)
+    dm.remind(channel)
 
 # Eingebautes Hilfe-Kommando deaktivieren
 bot.remove_command('help')

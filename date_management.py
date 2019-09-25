@@ -4,6 +4,7 @@ Modul zum Verwalten des Zockkalenders ACHTUNG: WIP!
 
 import sqlite3
 import discord
+import datetime
 
 async def show(ctx):
     '''
@@ -51,5 +52,27 @@ async def add(ctx, date, time, args):
         connection.close()
 
         await ctx.send('Termin "{}" am {} um {} gespeichert'.format(description,
-                                                                  date, time))
+                                                                    date, time))
         await ctx.message.delete()
+
+async def remind(channel):
+    connection = sqlite3.connect('calendar.db')
+    cursor = connection.cursor()
+    sql = 'SELECT Date, Description FROM dates'
+    cursor.execute(sql)
+    rows = cursor.fetchall()
+    today = datetime.datetime.now().date().isoformat()
+    dates = ''
+    descriptions = ''
+    for row in rows:
+        if today in row[0]:
+            dates += row[0] + '\n'
+            descriptions += row[1] + '\n'
+    embed = discord.Embed(title='Heute anstehende Zocktermine', description='', color=0xab4642)
+    embed.add_field(name='Termin', value=row[0], inline=True)
+    embed.add_field(name='Beschreibung', value=row[1], inline=True)
+
+    connection.commit()
+    connection.close()
+
+    await channel.send(embed=embed)
