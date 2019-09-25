@@ -44,6 +44,7 @@ async def on_ready():
     '''
     Kurze Meldung, wenn der Login auf dem Server erfolgreich war
     '''
+    date_reminder.start()
     print('We have logged in as {} '.format(bot.user.name))
 
 @bot.command()
@@ -92,10 +93,10 @@ async def dates(ctx, command='', date='', time='', *args):
     elif command == 'add':
         await dm.add(ctx, date, time, args)
 
-@tasks.loop(minutes=5.0)
+@tasks.loop(hours=24)
 async def date_reminder():
     channel = bot.get_channel(config.remind_channel)
-    dm.remind(channel)
+    await dm.remind(channel)
 
 # Eingebautes Hilfe-Kommando deaktivieren
 bot.remove_command('help')
