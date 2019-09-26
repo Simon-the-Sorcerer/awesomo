@@ -2,9 +2,9 @@
 Modul zum Verwalten des Zockkalenders ACHTUNG: WIP!
 '''
 
+import datetime
 import sqlite3
 import discord
-import datetime
 
 async def show(ctx):
     '''
@@ -56,6 +56,9 @@ async def add(ctx, date, time, args):
         await ctx.message.delete()
 
 async def remind(channel):
+    '''
+    Anstehende Termine ausgeben
+    '''
     connection = sqlite3.connect('calendar.db')
     cursor = connection.cursor()
     sql = 'SELECT Date, Description FROM dates'

@@ -4,7 +4,6 @@ Discord Bot für den NERDSquad-Discord-Server
 
 import logging
 import sqlite3
-import sys
 import os
 from discord.ext import commands, tasks
 import discord
@@ -95,12 +94,17 @@ async def dates(ctx, command='', date='', time='', *args):
 
 @tasks.loop(hours=24)
 async def date_reminder():
+    '''
+    Durchsucht die Datenbank nach anstehenden Terminen und erinnert im
+    definierten Channel daran
+    '''
     logger.info('Reminder ausgeführt')
     channel = bot.get_channel(config.remind_channel)
     await dm.remind(channel)
 
 # Eingebautes Hilfe-Kommando deaktivieren
 bot.remove_command('help')
+
 @bot.command()
 async def help(ctx):
     '''
@@ -113,11 +117,11 @@ async def help(ctx):
                     Mittelfranken', inline=False)
     embed.add_field(name='$hello', value='A.W.E.S.O.M-O stellt sich vor',
                     inline=False)
-    embed.add_field(name='$dates show', value='Gibt Termine im Zockkalender aus', inline=False),
+    embed.add_field(name='$dates show', value='Gibt Termine im Zockkalender aus', inline=False)
     embed.add_field(name='$dates add DATUM UHRZEIT BESCHREIBUNG', value='Trägt\
                     Termin in Zockkalender ein\n\
                     BEISPIEL: $dates add 2020-02-20 20:20 Rudi aus Buddeln\
-                    grüßen', inline=False),
+                    grüßen', inline=False)
     embed.add_field(name='$help', value='Gibt diese Hilfe aus', inline=False)
 
     await ctx.send(embed=embed)
