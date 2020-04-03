@@ -46,6 +46,7 @@ async def on_ready():
     date_reminder.start()
     print('We have logged in as {} '.format(bot.user.name))
 
+# Kommandos
 @bot.command()
 async def meddl(ctx):
     '''
@@ -53,6 +54,7 @@ async def meddl(ctx):
     '''
     await ctx.send('Meddl Loide')
     await ctx.message.delete()
+
 
 @bot.command()
 async def hello(ctx):
@@ -63,6 +65,7 @@ async def hello(ctx):
     await ctx.send('You could tell A.W.E.S.O.M.-O all of your most personal\
                    secrets.')
     await ctx.message.delete()
+
 
 @bot.command()
 async def info(ctx):
@@ -81,6 +84,24 @@ async def info(ctx):
     await ctx.send(embed=embed)
     await ctx.message.delete()
 
+
+@bot.command()
+async def shrug(ctx):
+    '''
+    ¯\_(ツ)_/¯
+    '''
+    await ctx.send(r'¯\_(ツ)_/¯')
+    await ctx.message.delete()
+
+
+@bot.command()
+async def next(ctx):
+    '''
+    Customer support
+    '''
+    await ctx.send('Another satisfied customer! Next!')
+    await ctx.message.delete()
+
 # Zockkalender
 @bot.command()
 async def dates(ctx, command='', date='', time='', *args):
@@ -91,6 +112,7 @@ async def dates(ctx, command='', date='', time='', *args):
         await dm.show(ctx)
     elif command == 'add':
         await dm.add(ctx, date, time, args)
+
 
 @tasks.loop(hours=24)
 async def date_reminder():
@@ -104,6 +126,7 @@ async def date_reminder():
 
 # Eingebautes Hilfe-Kommando deaktivieren
 bot.remove_command('help')
+
 
 @bot.command()
 async def help(ctx):
@@ -122,6 +145,8 @@ async def help(ctx):
                     Termin in Zockkalender ein\n\
                     BEISPIEL: $dates add 2020-02-20 20:20 Rudi aus Buddeln\
                     grüßen', inline=False)
+    embed.add_field(name='$next', value='Customer Support', inline=False)
+    embed.add_field(name='$shrug', value=r'¯\_(ツ)_/¯', inline=False)
     embed.add_field(name='$help', value='Gibt diese Hilfe aus', inline=False)
 
     await ctx.send(embed=embed)

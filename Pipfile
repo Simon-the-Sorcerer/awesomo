@@ -5,10 +5,11 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
+pycodestyle = "*"
 
 [packages]
 discord-py = {extras = ["voice"],version = "*"}
 pylint = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3"
