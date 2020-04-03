@@ -1,5 +1,11 @@
-client_id   = '' # your bot's client ID
-token = '' # your bot's token
+'''
+Einstellungen für den Bot
+'''
 
-remind_channel = 626665921720746010 # Channel ID for reminders (\#CHANNELNAME
-                                                                in Chat)
+# your bot's client ID
+client_id   = ''
+# your bot's token
+token = '' 
+
+# Channel ID for reminders (\#CHANNELNAME in Chat)
+remind_channel = 626665921720746010 

@@ -33,8 +33,11 @@ else:
 # Logging Einstellungen
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+handler = logging.FileHandler(filename='discord.log',
+                              encoding='utf-8',
+                              mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:\
+                                        %(name)s: %(message)s'))
 logger.addHandler(handler)
 
 
@@ -45,6 +48,10 @@ async def on_ready():
     '''
     date_reminder.start()
     print('We have logged in as {} '.format(bot.user.name))
+
+# Eingebaute Kommandos deaktivieren
+bot.remove_command('help')
+bot.remove_command('next')
 
 # Kommandos
 @bot.command()
@@ -124,9 +131,6 @@ async def date_reminder():
     channel = bot.get_channel(config.remind_channel)
     await dm.remind(channel)
 
-# Eingebautes Hilfe-Kommando deaktivieren
-bot.remove_command('help')
-
 
 @bot.command()
 async def help(ctx):
@@ -140,13 +144,15 @@ async def help(ctx):
                     Mittelfranken', inline=False)
     embed.add_field(name='$hello', value='A.W.E.S.O.M-O stellt sich vor',
                     inline=False)
-    embed.add_field(name='$dates show', value='Gibt Termine im Zockkalender aus', inline=False)
+    embed.add_field(name='$next', value='Customer Support', inline=False)
+    embed.add_field(name='$shrug', value=r'¯\_(ツ)_/¯', inline=False)
+    embed.add_field(name='$dates show',
+                    value='Gibt Termine im Zockkalender aus',
+                    inline=False)
     embed.add_field(name='$dates add DATUM UHRZEIT BESCHREIBUNG', value='Trägt\
                     Termin in Zockkalender ein\n\
                     BEISPIEL: $dates add 2020-02-20 20:20 Rudi aus Buddeln\
                     grüßen', inline=False)
-    embed.add_field(name='$next', value='Customer Support', inline=False)
-    embed.add_field(name='$shrug', value=r'¯\_(ツ)_/¯', inline=False)
     embed.add_field(name='$help', value='Gibt diese Hilfe aus', inline=False)
 
     await ctx.send(embed=embed)

@@ -6,6 +6,7 @@ import datetime
 import sqlite3
 import discord
 
+
 async def show(ctx):
     '''
     Termine ausgeben
@@ -16,7 +17,9 @@ async def show(ctx):
     cursor.execute(sql)
     rows = cursor.fetchall()
 
-    embed = discord.Embed(title='Anstehende Zocktermine', description='', color=0xab4642)
+    embed = discord.Embed(title='Anstehende Zocktermine',
+                          description='',
+                          color=0xab4642)
     dates = ''
     descriptions = ''
     for row in rows:
@@ -29,6 +32,7 @@ async def show(ctx):
 
     await ctx.send(embed=embed)
     await ctx.message.delete()
+
 
 async def add(ctx, date, time, args):
     '''
@@ -51,9 +55,12 @@ async def add(ctx, date, time, args):
         connection.commit()
         connection.close()
 
-        await ctx.send('Termin "{}" am {} um {} gespeichert'.format(description,
-                                                                    date, time))
+        await ctx.send('Termin "{}" am {} um\
+                        {} gespeichert'.format(description,
+                                               date,
+                                               time))
         await ctx.message.delete()
+
 
 async def remind(channel):
     '''
@@ -71,7 +78,9 @@ async def remind(channel):
         if today in row[0]:
             dates += row[0] + '\n'
             descriptions += row[1] + '\n'
-    embed = discord.Embed(title='Heute anstehende Zocktermine', description='', color=0xab4642)
+    embed = discord.Embed(title='Heute anstehende Zocktermine',
+                          description='',
+                          color=0xab4642)
     embed.add_field(name='Termin', value=row[0], inline=True)
     embed.add_field(name='Beschreibung', value=row[1], inline=True)
 
