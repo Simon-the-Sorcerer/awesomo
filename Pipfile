@@ -4,12 +4,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "*"
+flake8 = "*"
 pycodestyle = "*"
 
 [packages]
 discord-py = {extras = ["voice"],version = "*"}
-pylint = "*"
 
 [requires]
 python_version = "3"

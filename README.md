@@ -34,15 +34,18 @@ Command: `$shrug`
 Funktion: Übersicht über verfügbare Befehle  
 Command: `$help`
 
-### dates
+### date
 
-#### dates show
+#### date create
 
-Funktion: Zeigt die in der Datenbank eingetragenen Termine an  
-Command: `$dates [show]`
+Funktion: Erstellt einen neuen Termin
+Command: `$date create DATUM UHRZEIT BESCHREIBUNG`  
+Beispiel: `$date create 2020-02-02 20:20 Rudi aus Buddeln grüßen`
 
-#### dates add
+### poll
 
-Funktion: Fügt einen neuen Termin zur Datenbank hinzu  
-Command: `$dates DATUM UHRZEIT BESCHREIBUNG`  
-Beispiel: `$dates 2020-02-02 20:20 Rudi aus Buddeln grüßen`
+#### poll create
+
+Funktion: Erstellt eine neue Abstimmung
+Command: `$poll create "TITEL" Optionen`
+Beispiel: `$poll create "Neues Radlfideo?" Ja Nein "zu kalt"`

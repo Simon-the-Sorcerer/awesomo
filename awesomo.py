@@ -3,31 +3,14 @@ Discord Bot für den NERDSquad-Discord-Server
 '''
 
 import logging
-import sqlite3
-import os
-from discord.ext import commands, tasks
+from discord.ext import commands
 import discord
 import config
 
-import date_management as dm
+import modules.dates as dates
+import modules.polls as polls
 
 bot = commands.Bot(command_prefix='$')
-
-# Datenbank für Zockkalender erstellen, falls sie nicht schon existiert
-if not os.path.exists('calendar.db'):
-    print('Neue Kalenderdatenbank wird erstellt')
-    connection = sqlite3.connect('calendar.db')
-    cursor = connection.cursor()
-    sql = 'CREATE TABLE dates(\
-            id INTEGER PRIMARY KEY,\
-            Date DATE,\
-            Description TEXT)'
-    cursor.execute(sql)
-    connection.commit()
-    connection.close()
-    print('Neue Kalenderdatenbank angelegt')
-else:
-    print('Vorhandene Kalenderdatenbank gefunden')
 
 
 # Logging Einstellungen
@@ -46,12 +29,12 @@ async def on_ready():
     '''
     Kurze Meldung, wenn der Login auf dem Server erfolgreich war
     '''
-    date_reminder.start()
     print('We have logged in as {} '.format(bot.user.name))
 
 # Eingebaute Kommandos deaktivieren
 bot.remove_command('help')
 bot.remove_command('next')
+
 
 # Kommandos
 @bot.command()
@@ -109,27 +92,25 @@ async def next(ctx):
     await ctx.send('Another satisfied customer! Next!')
     await ctx.message.delete()
 
-# Zockkalender
+
+# Termine
 @bot.command()
-async def dates(ctx, command='', date='', time='', *args):
+async def date(ctx, command='', date='', time='', *args):
     '''
-    Kommando zum Verwalten vom Zockkalender ACHTUNG: WIP!
+    Kommando zum Erstellen von Terminen
     '''
-    if command == '' or command == 'show':
-        await dm.show(ctx)
-    elif command == 'add':
-        await dm.add(ctx, date, time, args)
+    if command == 'create':
+        await dates.create(ctx, date, time, args)
 
 
-@tasks.loop(hours=24)
-async def date_reminder():
+# Abstimmungen
+@bot.command()
+async def poll(ctx, command='', title='', *args):
     '''
-    Durchsucht die Datenbank nach anstehenden Terminen und erinnert im
-    definierten Channel daran
+    Kommando zum Erstellen von Terminen
     '''
-    logger.info('Reminder ausgeführt')
-    channel = bot.get_channel(config.remind_channel)
-    await dm.remind(channel)
+    if command == 'create':
+        await polls.create(ctx, title, args)
 
 
 @bot.command()
@@ -146,15 +127,15 @@ async def help(ctx):
                     inline=False)
     embed.add_field(name='$next', value='Customer Support', inline=False)
     embed.add_field(name='$shrug', value=r'¯\_(ツ)_/¯', inline=False)
-    embed.add_field(name='$dates show',
-                    value='Gibt Termine im Zockkalender aus',
-                    inline=False)
-    embed.add_field(name='$dates add DATUM UHRZEIT BESCHREIBUNG', value='Trägt\
-                    Termin in Zockkalender ein\n\
-                    BEISPIEL: $dates add 2020-02-20 20:20 Rudi aus Buddeln\
-                    grüßen', inline=False)
     embed.add_field(name='$help', value='Gibt diese Hilfe aus', inline=False)
-
+    embed.add_field(name='$date create DATUM UHRZEIT BESCHREIBUNG', value='Erstellt\
+                    einen neuen Termin\n\
+                    z.B.: $dates create 2020-02-20 20:20 Rudi aus Buddeln grüßen',
+                    inline=False)
+    embed.add_field(name='$poll create "TITEL" Optionen', value='Erstellt\
+                    eine neue Abstimmung\n\
+                    z.B.: $poll create "Neues Radlfideo?" Ja Nein "zu kalt"',
+                    inline=False)
     await ctx.send(embed=embed)
     await ctx.message.delete()
 
