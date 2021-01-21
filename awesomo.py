@@ -30,6 +30,8 @@ async def on_ready():
     Kurze Meldung, wenn der Login auf dem Server erfolgreich war
     '''
     print('We have logged in as {} '.format(bot.user.name))
+    
+    await bot.change_presence(activity=discord.Activity(name="Sending you $help", type=discord.ActivityType.competing))
 
 # Eingebaute Kommandos deaktivieren
 bot.remove_command('help')
