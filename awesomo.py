@@ -138,7 +138,7 @@ async def help(ctx):
                     eine neue Abstimmung\n\
                     z.B.: $poll create "Neues Radlfideo?" Ja Nein "zu kalt"',
                     inline=False)
-    await ctx.send(embed=embed)
+    await ctx.message.author.send(embed=embed)
     await ctx.message.delete()
 
 bot.run(config.token)
