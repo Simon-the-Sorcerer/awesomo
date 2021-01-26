@@ -2,6 +2,18 @@
 
 Discord-Bot für unseren Server
 
+## Installation für systemd
+
+1. Pfade in `systemd/awesomo.service` anpassen
+2. `awesomo.service` nach `$HOME/.config/systemd/user` kopieren
+3. Service aktivieren:
+    ```bash
+    $ systemctl --user daemon-reload
+    $ systemctl --user enable awesomo.service
+    $ systemctl --user start awesomo.service
+    $ sudo loginctl enable-linger $USER
+    ```
+
 ## Features
 
 ### meddl

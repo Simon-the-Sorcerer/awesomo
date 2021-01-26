@@ -1,0 +1,11 @@
+[Unit]
+Description=Awesoms Discord Bot
+
+[Service]
+Restart=on-failure
+Type=simple
+WorkingDirectory=/home/pi/awesomo
+ExecStart=/home/pi/.local/bin/pipenv run python3 /home/pi/awesomo/awesomo.py
+
+[Install]
+WantedBy=multi-user.target
